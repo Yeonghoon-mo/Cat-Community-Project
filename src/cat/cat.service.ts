@@ -1,4 +1,4 @@
-import { CatRequest } from './dto/cat.request';
+import { CatDTO } from './dto/cat.dto';
 import { Injectable, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 export class CatService {
   constructor(@InjectModel(Cat.name) private readonly catModel: Model<Cat>) {}
 
-  async signUp(body: CatRequest) {
+  async signUp(body: CatDTO) {
     const { email, name, password } = body;
 
     // * Email 중복체크

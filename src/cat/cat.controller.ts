@@ -1,4 +1,4 @@
-import { CatRequest } from './dto/cat.request';
+import { CatDTO } from './dto/cat.dto';
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CatService } from './cat.service';
 
@@ -12,7 +12,7 @@ export class CatController {
   }
 
   @Post()
-  async signUp(@Body() body: CatRequest) {
+  async signUp(@Body() body: CatDTO) {
     return await this.CatService.signUp(body);
   }
 
