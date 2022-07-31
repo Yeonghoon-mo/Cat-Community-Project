@@ -1,4 +1,4 @@
-import { AuthModule } from '../auth/auth.module';
+import { AuthModule } from './auth/auth.module';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -23,6 +23,7 @@ import { AppService } from './app.service';
 })
 export class AppModule implements NestModule {
   private readonly isDev: boolean = process.env.MODE === 'dev';
+
   configure(consumer: MiddlewareConsumer) {
     //* 전체 엔드포인트에 LoggerMiddleware가 실행이 된다.
     consumer.apply(LoggerMiddleware).forRoutes('*');

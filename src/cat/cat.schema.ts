@@ -49,7 +49,7 @@ export class Cat extends Document {
   })
   password: string;
 
-  @Prop()
+  @Prop({ default: 'https://raw.githubusercontent.com/amamov/teaching-nestjs-a-to-z/main/images/1.jpeg' }) // default image
   @IsString()
   imgUrl: string;
 
@@ -64,5 +64,6 @@ CatSchema.virtual('readOnlyData').get(function (this: Cat) {
     id: this.id,
     email: this.email,
     name: this.name,
+    imgUrl: this.imgUrl,
   };
 });
