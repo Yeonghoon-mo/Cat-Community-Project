@@ -7,6 +7,7 @@ import { CatsModule } from 'src/cat/cat.module';
 import { LoggerMiddleware } from 'src/common/middleware/logger.middleware';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AppService } from './app.service';
     }),
     CatsModule,
     AuthModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
