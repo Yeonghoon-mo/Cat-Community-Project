@@ -11,24 +11,23 @@ const options: SchemaOptions = {
 @Schema(options)
 export class Comments extends Document {
   @ApiProperty({ description: '작성한 고양이 ID', required: true })
-  @Prop({ type: Types.ObjectId, required: true, ref: 'cats', })
+  @Prop({ type: Types.ObjectId, required: true, ref: 'cats' })
   @IsNotEmpty()
-  author: string;
+  author: Types.ObjectId;
 
-  @ApiProperty({ description: '댓글 Content', required: true, })
+  @ApiProperty({ description: '댓글 Content', required: true })
   @IsString()
   @IsNotEmpty()
-  @Prop({ required: true, })
+  @Prop({ required: true })
   contents: string;
 
-  @ApiProperty({ description: '좋아요 수', required: true })
+  @ApiProperty({ description: '좋아요 수' })
   @Prop({ default: 0 })
-  @IsNotEmpty()
   @IsPositive() // 음수가 될수없는 Number
   likeCount: number;
 
-  @ApiProperty({ description: '작성 대상(게시물, 정보글)',required: true, })
-  @Prop({ type: Types.ObjectId, required: true, ref: 'cats', })
+  @ApiProperty({ description: '작성 대상(게시물, 정보글)', required: true })
+  @Prop({ type: Types.ObjectId, required: true, ref: 'cats' })
   @IsNotEmpty()
   info: Types.ObjectId;
 }

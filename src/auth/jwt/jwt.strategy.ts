@@ -1,8 +1,8 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { PassportStrategy } from "@nestjs/passport";
-import { ExtractJwt, Strategy } from "passport-jwt";
-import { Payload } from "./jwt.payload";
-import { CatRepository } from "../../cat/cat.repository";
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { Payload } from './jwt.payload';
+import { CatRepository } from '../../cat/cat.repository';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -17,8 +17,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: Payload) {
     // ID로 Cat(User)을 찾는다. ID는 payload.sub에 저장이 되어있다.
-    const cat = await this.catRepository.findCatByIdWithOutPassword(payload.sub);
-    if(cat) {
+    const cat = await this.catRepository.findCatByIdWithOutPassword({
+      catId: payload.sub,
+    });
+    if (cat) {
       return cat; // Request.user 안에 Cat이 들어가게 된다.
     } else {
       throw new UnauthorizedException('접근 오류');

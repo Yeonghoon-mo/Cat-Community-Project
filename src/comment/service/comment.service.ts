@@ -11,7 +11,7 @@ export class CommentService {
     @InjectModel(Comments.name) private readonly commentsModel: Model<Comments>,
     private readonly catRepository: CatRepository,
   ) {}
-  
+
   async getAllComments() {
     try {
       const comments = await this.commentsModel.find();
@@ -23,11 +23,17 @@ export class CommentService {
 
   async createComments(id: string, commentData: CommentCreateDto) {
     try {
-      const targetCat = await this.catRepository.findCatByIdWithOutPassword(id);
+      const targetCat = await this.catRepository.findCatByIdWithOutPassword({
+        catId: id,
+      });
       const { contents, author } = commentData;
       const validatedAuthor =
-        await this.catRepository.findCatByIdWithOutPassword(author);
-      const newComment = new this.commentsModel({ author: validatedAuthor._id, contents, info: targetCat._id });
+        await this.catRepository.findCatByIdWithOutPassword({ catId: author });
+      const newComment = new this.commentsModel({
+        author: validatedAuthor._id,
+        contents,
+        info: targetCat._id,
+      });
       return await newComment.save();
     } catch (error) {
       throw new BadRequestException(error.message);
@@ -39,8 +45,6 @@ export class CommentService {
       const comment = await this.commentsModel.findById(id);
       comment.likeCount += 1;
       return await comment.save();
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
 }

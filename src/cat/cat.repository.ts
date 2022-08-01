@@ -1,8 +1,10 @@
+import { CommentSchema } from './../comment/comment.schema';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { InjectModel, MongooseModule } from '@nestjs/mongoose';
+import { Model, Types } from 'mongoose';
 import { Cat } from './cat.schema';
 import { CatRequestDTO } from './dto/cat.request.dto';
+import * as mongoose from 'mongoose';
 
 @Injectable()
 export class CatRepository {
@@ -10,7 +12,12 @@ export class CatRepository {
 
   // 모든 고양이 조회
   async findAll() {
-    return await this.catModel.find();
+    const CommentsModel = mongoose.model('comments', CommentSchema);
+    // populate는 다른 document랑 이어줄 수 있는 Method. 2번째 파라미터는 해당하는 스키마
+    const result = await this.catModel
+      .find()
+      .populate('comments', CommentsModel);
+    return result;
   }
 
   // Email 중복체크
@@ -24,7 +31,7 @@ export class CatRepository {
   }
 
   // ID로 ID로 Cat(User) 찾기.
-  async findCatByIdWithOutPassword(catId: string): Promise<Cat | null> {
+  async findCatByIdWithOutPassword({ catId }: { catId: string | Types.ObjectId }): Promise<Cat | null> {
     const cat = await this.catModel.findById(catId).select('-password'); // 패스워드를 가지고 오지 않는다는 문법. ( select( -password) )
     return cat;
   }
