@@ -11,7 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { CatService } from '../service/cat.service';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from '../../auth/auth.service';
 import { LoginRequestDto } from '../../auth/dto/login.request.dto';
 import { JwtAuthGuard } from '../../auth/jwt/jwt.guard';
@@ -22,6 +22,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from '../../common/util/multer.options';
 import { Cat } from '../cat.schema';
 
+@ApiTags('cat')
 @Controller('cat')
 @UseInterceptors(SuccessInterceptor)
 @UseFilters(HttpExceptionFilter)
