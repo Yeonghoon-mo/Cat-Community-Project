@@ -1,10 +1,10 @@
-import { CommentSchema } from './../comment/comment.schema';
 import { Injectable } from '@nestjs/common';
-import { InjectModel, MongooseModule } from '@nestjs/mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import * as mongoose from 'mongoose';
 import { Model, Types } from 'mongoose';
+import { CommentSchema } from './../comment/comment.schema';
 import { Cat } from './cat.schema';
 import { CatRequestDTO } from './dto/cat.request.dto';
-import * as mongoose from 'mongoose';
 
 @Injectable()
 export class CatRepository {
